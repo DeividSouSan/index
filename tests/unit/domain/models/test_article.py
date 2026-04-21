@@ -37,13 +37,27 @@ class TestArticle:
                 path=pdf_path,
             )
 
-    def test_is_valid_with_invalid_type_status(self, tmp_path):
+    @pytest.mark.parametrize(
+        "invalid_status",
+        [
+            "OK",
+            "NOK",
+            "PENDING",
+            "",
+            None,
+            1,
+            True,
+            [],
+            {},
+        ],
+    )
+    def test_is_valid_with_invalid_type_status(self, tmp_path, invalid_status):
         """Deve invalidar artigo quando status não é Status."""
         pdf_path = tmp_path / "test.pdf"
         pdf_path.write_text("test")
 
         article = Article(
-            status="OK",
+            status=invalid_status,
             origin="Nature",
             author="Smith",
             title="Test Article",
