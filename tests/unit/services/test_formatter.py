@@ -1,7 +1,6 @@
 """Testes do formatter de nomes de arquivo."""
 
 from pathlib import Path
-import pytest
 from index_tui.domain.models.article import Article
 from index_tui.domain.value_objects import Status
 from index_tui.services.formatter import format_filename
@@ -23,7 +22,7 @@ class TestFormatterMethod:
 
         result = format_filename(article)
 
-        assert result == "[OK] [Arxiv] [John] Deep Learning.pdf"
+        assert result == "[OK] [Arxiv] John Deep Learning.pdf"
 
     def test_format_without_author(self):
         """Deve formatar corretamente artigo sem autor."""

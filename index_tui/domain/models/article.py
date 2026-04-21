@@ -28,5 +28,11 @@ class Article:
 
     def __str__(self) -> str:
         """Representação textual do artigo."""
-        author_part = f"[{self.author}]" if self.author else ""
-        return f"[{self.status}] [{self.origin}] {author_part} {self.title}"
+        parts = [f"[{self.status}]", f"[{self.origin}]"]
+
+        if self.author:
+            parts.append(f"[{self.author}]")
+
+        parts.append(self.title)
+
+        return " ".join(parts)

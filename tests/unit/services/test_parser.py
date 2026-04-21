@@ -1,11 +1,9 @@
 """Testes do parser de nomes de arquivo."""
 
-import pytest
 from pathlib import Path
 
 from index_tui.services.parser import parse_filename
 from index_tui.services.formatter import format_filename
-from index_tui.domain.value_objects import Status
 
 
 class TestParserValid:
@@ -180,7 +178,8 @@ class TestParserRoundtrip:
         assert article2 is not None
         assert article1.status == article2.status
         assert article1.origin == article2.origin
-        assert article1.author == article2.author == None
+        assert article1.author is None
+        assert article2.author is None
         assert article1.title == article2.title
 
 

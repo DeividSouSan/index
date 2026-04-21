@@ -38,18 +38,19 @@ class TestArticle:
             )
 
     def test_is_valid_with_invalid_type_status(self, tmp_path):
-        """Deve rejeitar status com tipo inválido na criação"""
+        """Deve invalidar artigo quando status não é Status."""
         pdf_path = tmp_path / "test.pdf"
         pdf_path.write_text("test")
 
-        with pytest.raises(ValueError):
-            Article(
-                status="OK",
-                origin="Nature",
-                author="Smith",
-                title="Test Article",
-                path=pdf_path,
-            )
+        article = Article(
+            status="OK",
+            origin="Nature",
+            author="Smith",
+            title="Test Article",
+            path=pdf_path,
+        )
+
+        assert not article.is_valid()
 
     def test_is_valid_with_empty_origin(self, tmp_path):
         """Deve retornar False com origin vazio"""
@@ -106,7 +107,29 @@ class TestArticle:
         assert article.is_valid()
 
     def test_str_with_valid_author(self, tmp_path):
-        raise NotImplementedError()
+        pdf_path = tmp_path / "test.pdf"
+        pdf_path.write_text("test")
+
+        article = Article(
+            status=Status("OK"),
+            origin="Nature",
+            author="Smith",
+            title="Test Article",
+            path=pdf_path,
+        )
+
+        assert str(article) == "[OK] [Nature] [Smith] Test Article"
 
     def test_str_with_none_author(self, tmp_path):
-        raise NotImplementedError()
+        pdf_path = tmp_path / "test.pdf"
+        pdf_path.write_text("test")
+
+        article = Article(
+            status=Status("OK"),
+            origin="Nature",
+            author=None,
+            title="Test Article",
+            path=pdf_path,
+        )
+
+        assert str(article) == "[OK] [Nature] Test Article"
