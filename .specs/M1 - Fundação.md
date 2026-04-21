@@ -19,3 +19,12 @@ Estabelecer a base técnica do Index para permitir evolução segura das próxim
 - Estrutura inicial do projeto Index.
 - Arquivos de configuração de projeto e dependências.
 - Aplicação inicial executável em modo básico.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] Estrutura inicial criada e consistente.
+- [x] Comando de execução inicia sem erro fatal (`uv run index`).
+- [x] Dependências essenciais declaradas e instaláveis via UV.
+- [x] Separação clara entre domínio, serviços e interface.
