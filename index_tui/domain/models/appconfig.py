@@ -10,7 +10,4 @@ class AppConfig:
 
     def is_valid(self) -> bool:
         """Verifica se a configuração é válida."""
-        if self.target_directory is None:
-            return False
-
-        return self.target_directory.is_dir()
+        return self.target_directory is not None and self.target_directory.is_dir()

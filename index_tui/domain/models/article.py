@@ -19,12 +19,12 @@ class Article:
     def is_valid(self) -> bool:
         """Verifica se o artigo está em formato válido."""
 
-        IS_STATUS_VALID = isinstance(self.status, Status)
-        IS_ORIGIN_EMPTY = bool(self.origin.strip())
-        IS_TITLE_EMPTY = bool(self.title.strip())
-        IS_EXT_PDF = self.path.suffix.lower() == ".pdf"
+        is_status_valid = isinstance(self.status, Status)
+        has_origin = bool(self.origin.strip())
+        has_title = bool(self.title.strip())
+        is_pdf_extension = self.path.suffix.lower() == ".pdf"
 
-        return all([IS_STATUS_VALID, IS_ORIGIN_EMPTY, IS_TITLE_EMPTY, IS_EXT_PDF])
+        return all((is_status_valid, has_origin, has_title, is_pdf_extension))
 
     def __str__(self) -> str:
         """Representação textual do artigo."""
