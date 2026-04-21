@@ -17,10 +17,13 @@ def format_filename(article: Article) -> str:
     Returns:
         Nome de arquivo formatado
     """
+    if not article.is_valid():
+        raise ValueError("Artigo inválido para formatação.")
+
     parts = [f"[{article.status}]", f"[{article.origin}]"]
 
     if article.author:
-        parts.append(article.author)
+        parts.append(f"[{article.author}]")
 
     parts.append(article.title)
 

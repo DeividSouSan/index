@@ -20,59 +20,21 @@ def parse_filename(filename: str, file_path: Path | None = None) -> Article | No
     Returns:
         Article se o parsing for bem-sucedido, None caso contrário
     """
-    if not filename.endswith(".pdf"):
-        return None
-
-    # Remove extensão para processar
-    name_without_ext = filename[:-4]
-
-    # Padrão: [status] [origem] [autor?] titulo
-    # Exemplo válidos:
-    # [OK] [Arxiv] John Doe Machine Learning Basics.pdf
-    # [NOK] [ResearchGate] Deep Learning.pdf
-    pattern = r"^\[([^\]]+)\]\s+\[([^\]]+)\]\s+(.+)$"
-    match = re.match(pattern, name_without_ext)
+    pattern = r"^\[([^\]\s]+)\]\s+\[([^\]\s]+)\](?:\s+\[([^\]\s]+)\])?\s+(.+)\.pdf$"
+    match = re.match(pattern, filename, re.IGNORECASE)
 
     if not match:
         return None
 
-    status, origin, remainder = match.groups()
+    status, origin, author, title = match.groups()
 
-    # Validar e criar Status value object
     try:
         status_obj = Status(status)
     except ValueError:
         return None
 
-    # Validar origem não está vazia
-    origin = origin.strip()
-    if not origin:
-        return None
-
-    # Tentar separar autor do título
-    # Heurística: verificar se há um padrão de "Palavra Palavra Restante"
-    # onde a primeira "Palavra" é um nome próprio (começa com maiúscula e é curto)
-    # Se tiver 3+ palavras E a primeira for uma palavra "razoável" (1-20 caracteres),
-    # assumir que é autor. Caso contrário, tudo é título.
-    words = remainder.split()
-
-    author = None
-    title = remainder.strip()
-
-    if len(words) >= 3:
-        first_word = words[0]
-        # Consideramos um autor válido se: tem 1-20 chars, começa com maiúscula
-        if 1 <= len(first_word) <= 20 and first_word[0].isupper():
-            author = first_word
-            title = " ".join(words[1:])
-    elif len(words) == 2:
-        # Se houver exatamente 2 palavras, é só título
-        title = remainder.strip()
-    else:
-        # Uma palavra é só título
-        title = remainder.strip()
-
-    if not title.strip():
+    title = title.strip()
+    if not title or "[" in title or "]" in title:
         return None
 
     # Construir objeto Article

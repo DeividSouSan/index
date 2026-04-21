@@ -21,10 +21,25 @@ class Article:
 
         is_status_valid = isinstance(self.status, Status)
         has_origin = bool(self.origin.strip())
+        has_origin_without_spaces = " " not in self.origin
+        has_valid_author = self.author is None or (
+            bool(self.author.strip()) and " " not in self.author
+        )
         has_title = bool(self.title.strip())
+        has_title_without_brackets = "[" not in self.title and "]" not in self.title
         is_pdf_extension = self.path.suffix.lower() == ".pdf"
 
-        return all((is_status_valid, has_origin, has_title, is_pdf_extension))
+        return all(
+            (
+                is_status_valid,
+                has_origin,
+                has_origin_without_spaces,
+                has_valid_author,
+                has_title,
+                has_title_without_brackets,
+                is_pdf_extension,
+            )
+        )
 
     def __str__(self) -> str:
         """Representação textual do artigo."""

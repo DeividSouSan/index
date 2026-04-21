@@ -62,6 +62,21 @@ class TestArticle:
         )
         assert not article.is_valid()
 
+    def test_is_valid_with_origin_with_spaces(self, tmp_path):
+        """Deve retornar False com origin contendo espaços."""
+        pdf_path = tmp_path / "test.pdf"
+        pdf_path.write_text("test")
+
+        article = Article(
+            status=Status("OK"),
+            origin="My Origin",
+            author="Smith",
+            title="Test Article",
+            path=pdf_path,
+        )
+
+        assert not article.is_valid()
+
     def test_is_valid_with_empty_title(self, tmp_path):
         """Deve retornar False com title vazio"""
         pdf_path = tmp_path / "test.pdf"
@@ -96,6 +111,21 @@ class TestArticle:
         )
         assert article.is_valid()
 
+    def test_is_valid_with_author_with_spaces(self, tmp_path):
+        """Deve retornar False com author contendo espaços."""
+        pdf_path = tmp_path / "test.pdf"
+        pdf_path.write_text("test")
+
+        article = Article(
+            status=Status("OK"),
+            origin="Nature",
+            author="John Smith",
+            title="Test Article",
+            path=pdf_path,
+        )
+
+        assert not article.is_valid()
+
     def test_is_valid_with_nok_status(self, tmp_path):
         """Deve retornar True com status NOK"""
         pdf_path = tmp_path / "test.pdf"
@@ -105,6 +135,21 @@ class TestArticle:
             status=Status("NOK"), origin="Nature", author=None, title="Test Article", path=pdf_path
         )
         assert article.is_valid()
+
+    def test_is_valid_with_title_with_brackets(self, tmp_path):
+        """Deve retornar False quando título contém colchetes."""
+        pdf_path = tmp_path / "test.pdf"
+        pdf_path.write_text("test")
+
+        article = Article(
+            status=Status("OK"),
+            origin="Nature",
+            author=None,
+            title="[Invalid] Title",
+            path=pdf_path,
+        )
+
+        assert not article.is_valid()
 
     def test_str_with_valid_author(self, tmp_path):
         pdf_path = tmp_path / "test.pdf"

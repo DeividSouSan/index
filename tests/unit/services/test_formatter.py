@@ -1,6 +1,9 @@
 """Testes do formatter de nomes de arquivo."""
 
 from pathlib import Path
+
+import pytest
+
 from index_tui.domain.models.article import Article
 from index_tui.domain.value_objects import Status
 from index_tui.services.formatter import format_filename
@@ -22,7 +25,7 @@ class TestFormatterMethod:
 
         result = format_filename(article)
 
-        assert result == "[OK] [Arxiv] John Deep Learning.pdf"
+        assert result == "[OK] [Arxiv] [John] Deep Learning.pdf"
 
     def test_format_without_author(self):
         """Deve formatar corretamente artigo sem autor."""
@@ -82,31 +85,13 @@ class TestFormatterCompatibilityWithParser:
         )
 
         formatted = format_filename(article)
-
         parsed = parse_filename(formatted)
 
         assert parsed is not None
         assert str(parsed.status) == str(article.status)
         assert parsed.origin == article.origin
+        assert parsed.author == article.author
         assert parsed.title == article.title
-
-    def test_format_then_parse_preserves_metadata(self):
-        """Dados devem ser preservados após format → parse."""
-        article = Article(
-            status=Status("OK"),
-            origin="Arxiv",
-            author="Alice",
-            title="Quantum Computing Basics",
-            path=Path("test.pdf"),
-        )
-
-        formatted = format_filename(article)
-        reparsed = parse_filename(formatted)
-
-        assert reparsed is not None
-        assert str(reparsed.status) == "OK"
-        assert reparsed.origin == "Arxiv"
-        assert reparsed.title == "Quantum Computing Basics"
 
     def test_format_no_author_then_parse(self):
         """Formato sem autor deve permanecer sem autor após roundtrip."""
@@ -175,17 +160,28 @@ class TestFormatterEdgeCases:
 
         assert result.endswith(".pdf")
 
-    def test_format_author_empty_string(self):
-        """Deve tratar string vazia de autor como None."""
+    def test_format_rejects_empty_author_string(self):
+        """Deve rejeitar author vazio."""
         article = Article(
             status=Status("OK"),
             origin="Source",
-            author="",  # String vazia, não None
+            author="",
             title="Title",
             path=Path("test.pdf"),
         )
 
-        result = format_filename(article)
+        with pytest.raises(ValueError):
+            format_filename(article)
 
-        # Comportamento: se author é string vazia (falsy), não deve incluir
-        assert "[OK] [Source] Title.pdf" == result or "[OK] [Source]  Title.pdf" in result
+    def test_format_rejects_origin_with_spaces(self):
+        """Deve rejeitar artigo com origem inválida."""
+        article = Article(
+            status=Status("OK"),
+            origin="Origin Space",
+            author=None,
+            title="Title",
+            path=Path("test.pdf"),
+        )
+
+        with pytest.raises(ValueError):
+            format_filename(article)
