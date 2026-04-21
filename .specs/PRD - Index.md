@@ -6,22 +6,62 @@ O **Index** é um aplicativo de terminal (Text User Interface) voltado para ambi
 
 ## **2\. Contrato de Dados (Nomenclatura de Arquivos)**
 
-A espinha dorsal da aplicação é o padrão de nomenclatura dos arquivos PDF. O parser da aplicação deverá extrair metadados com base nestes formatos canônicos:
+A espinha dorsal da aplicação é um **contrato determinístico e explícito** de nomenclatura de arquivos PDF. O parser extrai metadados com base em colchetes como delimitadores, sem heurísticas de interpretação.
 
-* `[Status] [Origem] [Autor] Título do Artigo.pdf`
-* `[Status] [Origem] Título do Artigo.pdf` (quando autor estiver ausente)
+### **Padrões Aceitos**
 
-Regras de validação:
+**Sem Autor (3 colchetes):**
+```
+[Status] [Origem] Título.pdf
+```
 
-* **Status:** Campo fixo no MVP. Valores aceitos: `OK` e `NOK`.
-* **Origem:** Campo livre (qualquer texto não vazio entre colchetes).
-* **Autor:** Opcional. Se ausente, o bloco `[Autor]` é omitido.
-* **Título:** Obrigatório. Pode conter espaços e caracteres especiais.
-* **Extensão:** Apenas `.pdf`.
+**Com Autor (4 colchetes):**
+```
+[Status] [Origem] [Autor] Título.pdf
+```
 
-Regex de referência para implementação:
+### **Especificação de Campos**
 
-`^\[(OK|NOK)\]\s+\[(.+?)\](?:\s+\[(.+?)\])?\s+(.+)\.pdf$`
+| Campo | Obrigatório | Restrições | Exemplos |
+|-------|------------|-----------|----------|
+| **Status** | ✅ Sim | Deve ser "OK" ou "NOK" (case-sensitive) | `[OK]`, `[NOK]` |
+| **Origem** | ✅ Sim | **SEM espaços**, pode ter caracteres especiais | `[TabNews]`, `[Medium-BR]`, `[Dev.to]` |
+| **Autor** | ❌ Opcional | **SEM espaços**, pode ter caracteres especiais | `[filipedeschamps]`, `[john_doe]`, `[MartinFowler]` |
+| **Título** | ✅ Sim | **CAN ter espaços**, sem colchetes, não vazio | `Machine Learning Basics`, `Why TypeScript matters?` |
+| **Extensão** | ✅ Sim | Apenas `.pdf` (case-insensitive) | `.pdf`, `.PDF` |
+
+### **Exemplos Válidos**
+
+* `[OK] [TabNews] [filipedeschamps] Teste.pdf`
+* `[NOK] [Devto] [JorgeFerreira] Testando testes.pdf`
+* `[OK] [MartinFowler] [MartinFowler] DDD.pdf`
+* `[OK] [Anthropic] Claude is dangerous?.pdf` (sem autor)
+* `[NOK] [Medium-BR] Learning Rust in 2024.pdf` (sem autor)
+
+### **Exemplos Inválidos (Rejeitados)**
+
+| Exemplo | Motivo |
+|---------|--------|
+| `[OK Anthropic] Teste.pdf` | Status não fecha colchete |
+| `[OK] [Origin Space] [Author] Title.pdf` | Origem contém espaço |
+| `[OK] [Origin] [Author Name] Title.pdf` | Autor contém espaço |
+| `[NOK] [Autor] Titulo.pdf` | Falta segundo colchete (origem obrigatória) |
+| `[NOK] [JournalDaFatec] [Valeria].pdf` | Título vazio |
+| `[PENDING] [Origin] [Author] Title.pdf` | Status não é "OK" nem "NOK" |
+| `[OK] [Origin] [Author] Title.doc` | Extensão não é `.pdf` |
+
+### **Princípios de Design**
+
+* **Determinístico:** Sem heurísticas ou interpretação. Colchetes definem explicitamente cada campo.
+* **Sem Recuperação:** Qualquer desvio do contrato resulta em arquivo inválido (retorna `None`).
+* **Responsabilidade do Usuário:** A nomeação correta é responsabilidade de quem cria/renomeia o arquivo.
+* **Classificação Automática:** Arquivos inválidos são isolados na aba "Uncategorized" sem gerar erros.
+
+### **Comportamento do Parser**
+
+* **Entrada Válida:** Retorna objeto `Article` com metadados extraídos.
+* **Entrada Inválida:** Retorna `None` (sem lançar exceção).
+* **Extensão Não-.pdf:** Ignorado pelo parser (não processado).
 
 ## **3\. Arquitetura Visual (Interface)**
 
