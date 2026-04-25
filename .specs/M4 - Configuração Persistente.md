@@ -19,3 +19,13 @@ Implementar o ciclo de vida de configuração do diretório alvo com persistênc
 - Módulo de persistência de configuração.
 - Fluxo de primeira execução.
 - Fluxo de remapeamento de diretório.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] Sem configuração prévia, o app retorna AppConfig inválida (acionando fluxo de setup).
+- [x] Após salvar, a configuração persiste em JSON entre reinicializações.
+- [x] O serviço permite alterar e salvar o diretório em runtime.
+- [x] Configuração inválida ou JSON corrompido não derrubam o app e retornam estado seguro.
+
