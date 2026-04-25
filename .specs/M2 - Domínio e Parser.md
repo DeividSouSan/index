@@ -27,3 +27,13 @@ Implementar o núcleo de dados e o parser do contrato de arquivos PDF com valida
 - Modelos de domínio.
 - Parser e formatter do contrato.
 - Testes unitários do núcleo de parsing.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] O parser identifica corretamente arquivos válidos e inválidos.
+- [x] Arquivos inválidos são encaminhados para Uncategorized sem erro fatal.
+- [x] O formatter gera nomes compatíveis com o contrato.
+- [x] Casos de borda (autor ausente, acentos, espaços) estão cobertos em testes.
+
