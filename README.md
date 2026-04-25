@@ -6,6 +6,9 @@
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
 ![Textual](https://img.shields.io/badge/ui-Textual-orange.svg)
 
+<img width="1333" height="531" alt="image" src="https://github.com/user-attachments/assets/064a9177-8530-4f40-8f30-1836192ae276" />
+
+
 ## ✨ Funcionalidades
 
 - 📂 **Organização Automática**: Detecta metadados (Status, Origem, Autor, Título) diretamente do nome do arquivo.
