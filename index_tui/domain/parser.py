@@ -34,8 +34,6 @@ def parse_filename(filename: str, file_path: Path | None = None) -> Article | No
         return None
 
     title = title.strip()
-    if not title or "[" in title or "]" in title:
-        return None
 
     # Construir objeto Article
     path = file_path or Path(filename)

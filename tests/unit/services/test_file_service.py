@@ -131,3 +131,23 @@ def test_open_article_raises_error_if_not_found(tmp_path, file_service):
     
     with pytest.raises(FileNotFoundError):
         file_service.open_article(path)
+
+def test_list_articles_non_existent_directory(tmp_path, file_service):
+    non_existent = tmp_path / "ghost_dir"
+    articles = file_service.list_articles(non_existent)
+    assert articles == []
+
+def test_rename_article_no_op_if_name_is_same(tmp_path, file_service):
+    path = tmp_path / "[OK] [Origin] Title.pdf"
+    path.touch()
+    article = Article(Status("OK"), "Origin", None, "Title", path)
+    
+    new_path = file_service.rename_article(article)
+    assert new_path == path
+
+def test_rename_article_raises_error_if_source_not_found(tmp_path, file_service):
+    path = tmp_path / "gone.pdf"
+    article = Article(Status("OK"), "Origin", None, "Title", path)
+    
+    with pytest.raises(FileNotFoundError):
+        file_service.rename_article(article)

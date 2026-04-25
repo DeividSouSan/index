@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
+from index_tui.domain.formatter import format_filename
 from index_tui.domain.models.article import Article
 from index_tui.domain.value_objects import Status
-from index_tui.services.formatter import format_filename
-from index_tui.services.parser import parse_filename
+from index_tui.domain.parser import parse_filename
 
 
 class TestFormatterMethod:

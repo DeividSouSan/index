@@ -2,8 +2,10 @@
 
 from pathlib import Path
 
-from index_tui.services.formatter import format_filename
-from index_tui.services.parser import parse_filename
+from index_tui.domain.models.article import Article
+from index_tui.domain.parser import parse_filename
+from index_tui.domain.value_objects import Status
+from index_tui.domain.formatter import format_filename
 
 
 class TestParserValid:
@@ -56,6 +58,11 @@ class TestParserValid:
         assert article is not None
         assert article.title == "Relativity"
 
+
+    def test_parse_invalid_title_with_brackets(self):
+        """Deve retornar None se o título contiver colchetes (inválido para o modelo)."""
+        filename = "[OK] [IEEE] Title [With Brackets].pdf"
+        assert parse_filename(filename) is None
 
 class TestParserInvalid:
     """Testes de parsing com arquivos inválidos."""
