@@ -1,0 +1,55 @@
+/* index_tui/ui/app.tcss */
+
+Screen {
+    background: $boost;
+    color: $text;
+}
+
+Header {
+    background: $primary;
+    color: $text;
+    text-style: bold;
+    height: 3;
+    content-align: center middle;
+}
+
+Footer {
+    background: $primary;
+    color: $text;
+}
+
+#main-container {
+    padding: 1 2;
+}
+
+DataTable {
+    height: 1fr;
+    border: round $primary;
+    background: $surface;
+}
+
+/* Zebra striping para melhor leitura */
+DataTable > .datatable--even-row {
+    background: $boost;
+}
+
+/* Estilos de Status */
+.status-ok {
+    color: $success;
+    text-style: bold;
+}
+
+.status-nok {
+    color: $error;
+    text-style: bold;
+}
+
+/* Mensagem de estado vazio */
+#empty-state {
+    width: 100%;
+    height: 100%;
+    content-align: center middle;
+    color: $text-muted;
+    display: none;
+    text-style: italic;
+}

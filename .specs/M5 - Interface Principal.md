@@ -21,3 +21,14 @@ Entregar a estrutura principal da TUI com navegação rápida e visualização c
 - Tela principal funcional com abas e DataTable.
 - Atalhos de navegação e atualização manual.
 - Comportamento de estado vazio validado.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] O layout principal é renderizado corretamente via `IndexApp`.
+- [x] Abas "Principal" e "Uncategorized" separam os artigos conforme o contrato.
+- [x] O DataTable exibe Status (colorido), Origem, Autor e Título.
+- [x] O atalho 'R' atualiza a biblioteca dinamicamente via Workers.
+- [x] A mensagem de "Nenhum artigo .pdf encontrado" aparece corretamente em diretórios vazios.
+
