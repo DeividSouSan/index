@@ -1,6 +1,6 @@
 # 📚 Index
 
-**Index** é um organizador de artigos científicos e documentos PDF elegante para o terminal. Ele utiliza uma interface TUI (Text User Interface) moderna para ajudar você a manter sua biblioteca limpa, categorizada e acessível.
+**Index** é um organizador de artigos e documentos PDF elegante para o terminal. Ele utiliza uma interface TUI (Text User Interface) moderna para ajudar você a manter sua biblioteca limpa, categorizada e acessível.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
@@ -53,4 +53,5 @@ Se você deseja contribuir para o projeto:
 3.  Crie uma branch para sua funcionalidade e abra um Pull Request.
 
 ---
-Desenvolvido com ❤️ para entusiastas do terminal.
+
+> **Nota**: O Index é um projeto de verdade, mas também é um experimento de codificação agêntica.
