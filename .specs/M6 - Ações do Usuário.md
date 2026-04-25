@@ -21,3 +21,14 @@ Concluir os fluxos interativos principais orientados a teclado para operação d
 - Modais de edição e confirmação.
 - Mapeamento completo de atalhos definidos no PRD.
 - Fluxo funcional ponta a ponta dentro da TUI.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] Enter abre o PDF selecionado usando o visualizador padrão do sistema.
+- [x] 'E' abre modal de edição e aplica renomeação física no disco com sucesso.
+- [x] 'Del' solicita confirmação e move o arquivo para a lixeira via `send2trash`.
+- [x] 'S' permite alterar o diretório de trabalho e recarrega a biblioteca instantaneamente.
+- [x] Notificações flutuantes confirmam o sucesso ou erro de cada operação.
+
