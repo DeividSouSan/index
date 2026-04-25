@@ -20,3 +20,13 @@ Estabilizar o MVP do Index com validação funcional, cobertura de testes e docu
 - Suíte de testes mínima para confiança de mudanças.
 - Checklist de validação funcional concluído.
 - Documentação final do escopo MVP implementado.
+
+## Status
+Concluída.
+
+## Validação final do MVP
+- [x] Fundação sólida com TDD (100% de cobertura no Core).
+- [x] Domínio e Contrato de nomes isolados e protegidos.
+- [x] Persistência resiliente de configurações.
+- [x] Interface TUI moderna com navegação fluida e modais.
+- [x] Ferramentas de UX avançadas (Autocomplete de caminhos e Preview).
