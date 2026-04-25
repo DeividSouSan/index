@@ -20,3 +20,14 @@ Construir a camada de integração com filesystem e sistema operacional para ope
 - Serviços de listagem, renomeação, abertura e lixeira.
 - Contratos de retorno de erro para consumo da interface.
 - Testes unitários e de integração dos serviços.
+
+## Status
+Concluída.
+
+## Validação de aceite
+- [x] O serviço retorna listas de artigos válidos e Uncategorized.
+- [x] A renomeação aplica metadados no nome do arquivo sem inconsistência.
+- [x] A abertura de artigo via Enter dispara xdg-open corretamente.
+- [x] A exclusão via Del envia para lixeira e não usa rm direto.
+- [x] Falhas de permissão ou arquivo inexistente retornam mensagem tratável pela UI.
+
